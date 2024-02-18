@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import scrolledtext
 import speech_recognition as sr
 from textblob import TextBlob
-from neuralintents import GenericAssistant
+from neuralintents import BasicAssistant
 
 class VoiceAssistantGUI:
-    def __init__(self, master):
+    def _init_(self, master):
         self.master = master
         master.title("Voice-Based Mental Health Journaling App")
 
@@ -43,7 +43,7 @@ class VoiceAssistantGUI:
                 sentiment = blob.sentiment.polarity
 
                 # Perform actions based on user input
-                response = assistant.request(user_input)
+                response = assistant.process_input("Hello How are you")
                 self.text_area.insert(tk.END, f"Assistant: {response}\n")
 
                 # Update the listening label
@@ -56,7 +56,8 @@ class VoiceAssistantGUI:
 
 
 # Create a Neural Assistant
-assistant = GenericAssistant(r"C:\Users\91984\OneDrive\Desktop\projects\intents.json", model_name='text_response_model')
+assistant = BasicAssistant(r"intents.json", model_name='text_response_model')
+assistant.fit_model()
 
 # Create and run the GUI
 root = tk.Tk()
